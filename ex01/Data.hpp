@@ -4,15 +4,9 @@
 #define DATA_HPP
 #include <iostream>
 
-class Data
+typedef struct Data
 {
-	private:
-		int	data;
+	int data;
+} Data;
 
-	public:
-		Data(void);
-		Data(Data const &src);
-		Data &	operator=(Data const & rhs);
-		~Data();
-};
 #endif
