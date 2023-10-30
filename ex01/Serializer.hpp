@@ -8,14 +8,13 @@
 class Serializer
 {
 	private:
-
-
-	public:
 		Serializer(void);
 		Serializer(Serializer const &src);
 		Serializer &	operator=(Serializer const & rhs);
 		~Serializer();
-		uintptr_t serialize(Data* ptr);
-		Data* deserialize(uintptr_t raw);
+	public:
+		static uintptr_t serialize(Data* ptr);
+		static Data* deserialize(uintptr_t raw);
 };
+
 #endif

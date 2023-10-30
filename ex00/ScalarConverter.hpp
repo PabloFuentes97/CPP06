@@ -11,22 +11,22 @@
 class ScalarConverter
 {
 	private:
-		int		checkChar(std::string type);
-		int		checkInt(std::string type);
-		int		checkFloat(std::string type);
-		int		checkDouble(std::string type);
-		int		checkType(std::string type);
-		void	convertChar(std::string type);
-		void	convertInt(std::string type);
-		bool	checkSpecialCases(std::string type, std::string cases[]);
-		void	convertFloat(std::string type);
-		void	convertDouble(std::string type);
-	public:
 		ScalarConverter();
 		~ScalarConverter();
 		ScalarConverter(ScalarConverter const &src);
 		ScalarConverter &	operator=(ScalarConverter const & rhs);
-		void	convert(std::string type);
+		static int	checkChar(std::string type);
+		static int	checkInt(std::string type);
+		static int	checkFloat(std::string type);
+		static int	checkDouble(std::string type);
+		static int	checkType(std::string type);
+		static void	convertChar(std::string type);
+		static void	convertInt(std::string type);
+		static bool	checkSpecialCases(std::string type, std::string cases[]);
+		static void	convertFloat(std::string type);
+		static void	convertDouble(std::string type);
+	public:
+		static void	convert(std::string type);
 };
 
 int		countCharStr(std::string str, char c);

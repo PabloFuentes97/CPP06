@@ -31,9 +31,9 @@
 		if (type[0] < 32 || type[0] > 127) {
 			std::cout << "Non printable character" << std::endl;
 			return (0); }
-		if ((type[0] >= 'A' && type[0] <= 'Z') || (type[0] >= 'a' && type[0] <= 'z'))
-			return (1);
-		return (0);
+		if (type[0] >= '0' && type[0] <= '9')
+			return (0);
+		return (1);
 	}
 
 	int	ScalarConverter::checkInt(std::string type)
@@ -113,16 +113,41 @@
 
 	int	ScalarConverter::checkType(std::string type)
 	{
-		int	(ScalarConverter::*checker[4])(std::string) = {&ScalarConverter::checkChar, 
-				&ScalarConverter::checkInt, &ScalarConverter::checkFloat, &ScalarConverter::checkDouble};
-		
 		int	ret;
 
 		for (int i = 0; i < 4; i++)
 		{
-			ret = (this->*checker[i])(type);
-			if (ret == 1)
-				return (i + 1);
+			switch(i)
+			{
+				case 0:
+				{
+					ret = ScalarConverter::checkChar(type);
+					if (ret == 1)
+						return (i + 1);
+					break ;
+				}
+				case 1:
+				{
+					ret = ScalarConverter::checkInt(type);
+					if (ret == 1)
+						return (i + 1);
+					break ;
+				}
+				case 2:
+				{
+					ret = ScalarConverter::checkFloat(type);
+					if (ret == 1)
+						return (i + 1);
+					break ;
+				}
+				case 3:
+				{
+					ret = ScalarConverter::checkDouble(type);
+					if (ret == 1)
+						return (i + 1);
+					break ;
+				}
+			}
 		}
 		return (0);
 	}
@@ -144,7 +169,7 @@
 		long double	cNum = atof(cArr);
 		
 		//char
-		if (cNum < 32 || cNum > 127)
+		if (cNum < 33 || cNum > 126)
 			std::cout << "Char: impossible" << std::endl;
 		else
 			std::cout << "Char: '" << static_cast<char>(cInt) << "'" << std::endl;
@@ -186,8 +211,9 @@
 		float		cFloat = atof(cArr);
 		long double	cNum = atof(cArr);
 		
-		std::string specialCases[3] = {"-inf", "+inf", "nanf"};
-		if (checkSpecialCases(type, specialCases))
+		std::string specialCases[3] = {"-inf", "+inf", "nan"};
+		std::cout << std::fixed << std::showpoint << std::setprecision(5); 
+		if (ScalarConverter::checkSpecialCases(type, specialCases))
 			return ;
 		//char
 		if (cNum < 32 || cNum > 127)
@@ -214,11 +240,12 @@
 	void	ScalarConverter::convertDouble(std::string type)
 	{
 		const char	*cArr = type.c_str();
-		long double	cNum = atof(cArr);
 		double 		cDouble = atof(cArr);
+		long double	cNum = atof(cArr);
 	
 		std::string specialCases[3] = {"-inf", "+inf", "nan"};
-		if (checkSpecialCases(type, specialCases))
+		std::cout << std::fixed << std::showpoint << std::setprecision(5); 
+		if (ScalarConverter::checkSpecialCases(type, specialCases))
 			return ;
 		//char
 		if (cNum < 32 || cNum > 127)
@@ -244,7 +271,7 @@
 
 	void	ScalarConverter::convert(std::string type)
 	{
-		switch (this->checkType(type))
+		switch (ScalarConverter::checkType(type))
 		{
 			//invalid type
 			case 0:
@@ -256,28 +283,28 @@
 			case 1:
 			{
 				std::cout << "It's a char type!" << std::endl;
-				this->convertChar(type);
+				ScalarConverter::convertChar(type);
 				break ;
 			}
 			//int type
 			case 2:
 			{
 				std::cout << "It's a int type!" << std::endl;
-				this->convertInt(type);
+				ScalarConverter::convertInt(type);
 				break ;
 			}
 			//float type
 			case 3:
 			{
 				std::cout << "It's a float type!" << std::endl;
-				this->convertFloat(type);
+				ScalarConverter::convertFloat(type);
 				break ;
 			}
 			//double type
 			case 4:
 			{
 				std::cout << "It's a double type!" << std::endl;
-				this->convertDouble(type);
+				ScalarConverter::convertDouble(type);
 				break ;
 			}
 		}
